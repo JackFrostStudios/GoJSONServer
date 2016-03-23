@@ -29,7 +29,13 @@ func main() {
 }
 
 func returnJSON(w http.ResponseWriter, r *http.Request) {
-	timeDelay := rand.Int31n(maxDelay)
+	var timeDelay int32
+	if maxDelay == 0 {
+		timeDelay = 0
+	} else {
+		timeDelay = rand.Int31n(maxDelay)
+	}
+
 	response := serverResponse{timeDelay}
 	fmt.Printf("Sleeping %d ....\n", timeDelay)
 	time.Sleep(time.Second * time.Duration(timeDelay))
